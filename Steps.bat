@@ -1,4 +1,4 @@
-# ELK Stack + Filebeat Setup Script for Ubuntu
+# ELK Stack Setup Script for Ubuntu
 # Because you *could* do this manually... but also, why?
 # Make sure you log in as a root user. You can log in by inputting:
 sudo passwd root
