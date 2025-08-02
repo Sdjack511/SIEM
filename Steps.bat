@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-# 🧠 ELK Stack + Filebeat Setup Script for Ubuntu
+# ELK Stack + Filebeat Setup Script for Ubuntu
 # Because you *could* do this manually... but also, why?
 
 set -e  # If this breaks, it breaks fast. Just like me under pressure.
@@ -115,3 +114,6 @@ echo ""
 echo "✅ Done. Your Elastic SIEM stack is alive. Like Frankenstein. But cooler."
 echo "➡ Visit: http://<your_server_ip>:5601 to feel like a hacker in a Netflix show."
 echo "🔐 Login as 'elastic' and try to remember that password you swore you'd never forget."
+
+
+FN-W swap wasd
