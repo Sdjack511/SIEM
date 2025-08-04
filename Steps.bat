@@ -92,6 +92,53 @@ sudo systemctl start logstash
 
 echo "Login as 'elastic' and try to remember that password you swore you'd never forget."
 
+# Now we are going to connect to Elastic
+# Check your IP address by inputting:
+ifconfig
+# If that command does not work make sure you install net-tools with
+sudo apt install net-tools
+# With your IP address lets establish a remote connection with Elastic by navigating to a web browser and going to the addres "IP adress:5601" or I.E
+# 0.0.0.0.0:5601
+
+# If every step was taken correctly you should see an enrollment token screen. 
+
+echo "Step 7: Adding the Enrollment Token"
+
+cd /usr/share/kibana/bin
+sudo ./kibana-encryption-keys generate
+
+# This will generate encryption keys
+# Once these keys are generated, add each key to respective locations, examples below. 
+./kibana-keystore add xpack.encryptedSavedObjects.encryptionKey
+# Add the subsequent key when it asks you to enter the value. Rinse repeat for the other two as shown:
+./kibana-keystore add xpack.reporting.encryptionKey - select enter then enter value
+./kibana-keystore add xpack.security.encryptionKey - same instruction for the last location
+# Restart Kibana
+sudo systemctl restart kibana
+cd usr/share/elasticsearch/bin
+sudo ./elasticsearch-create-enrollment-token --scope kibana
+
+# Copy the string of text below after you select enter, that is the enrollment token.
+# You should be taken to the next screen, asking for a verification code. Navigate back to the terminal, and input:
+cd /usr/share/kibana/bin
+./kibana-verification-code
+
+# Add the verification code and it is now configured. Just simply log in.
+# Username is: elastic
+# Password: Is in the steps below. Sorry to leave you with a cliff hanger, I couldn't resist.  
+
+echo "Step 8: Opening the neccessary Ports"
+sudo ufw allow 5601/tcp
+sudo ufw allow 9200/tcp
+# If UFW is not found on your system, install with
+sudo apt ufw install
+# If you try navigating to "your ip address:9200" you should now get a screen where it asks for your username/password.
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+# Input the same value to reset for elastic as well
+# New Value: shows your password, copy this and save this password
+# You should now be able to log into kibana and elastic remotely. all programs should be properly configured as well. 
+
 
 FN-W swap wasd
 
